@@ -1,0 +1,99 @@
+local trajectories = {}
+local last_position = nil
+local last_contact_time = nil
+local recording = true
+local backetID = "backet1"  -- Переносим сюда для динамической инициализации
+
+local function save_trajectories_to_file(trajectories, backetID)
+	local file_path = "settings/physics_baked/" .. backetID .. ".json"
+	local existing_data = {}
+
+	-- Check if the file exists and load its content
+	local file = io.open(file_path, "r")
+	if file then
+		local content = file:read("*a")
+		existing_data = json.decode(content) or {}
+		file:close()
+	end
+
+	-- Initialize the backetID table if it does not exist
+	if not existing_data[backetID] then
+		existing_data[backetID] = {}
+	end
+
+	-- Find the next record index
+	local next_index = 1
+	for key, _ in pairs(existing_data[backetID]) do
+		local index = tonumber(key:match("record(%d+)"))
+		if index and index >= next_index then
+			next_index = index + 1
+		end
+	end
+
+	-- Add new trajectories under a unique record key
+	local record_key = "record" .. next_index
+	existing_data[backetID][record_key] = {}
+	for _, entry in ipairs(trajectories) do
+		table.insert(existing_data[backetID][record_key], {
+			position = {
+				x = entry.position.x,
+				y = entry.position.y,
+				z = entry.position.z
+			},
+			delta = entry.delta
+		})
+	end
+
+	local json_data = json.encode(existing_data)
+	file = io.open(file_path, "w")
+	if file then
+		file:write(json_data)
+		file:close()
+	else
+		print("Error: Unable to open file for writing:", file_path)
+	end
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.ball = go.get_id()
+	self.backetID = backetID  -- Инициализация backetID
+end
+
+function update(self, dt)
+	if recording then
+		local pos = go.get_position(self.ball)
+		if not last_position or pos.x ~= last_position.x or pos.y ~= last_position.y or pos.z ~= last_position.z then
+			last_position = pos
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("save_record") and action.pressed then
+		print("Number of elements in trajectories:", #trajectories)
+		save_trajectories_to_file(trajectories, self.backetID)
+		trajectories = {}  -- Сброс траекторий после сохранения
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("trigger_response") then
+		recording = false
+		save_trajectories_to_file(trajectories, self.backetID)
+		go.delete()
+	elseif message_id == hash("contact_point_response") then
+		if recording then
+			local pos = go.get_position(self.ball)
+			local current_time = socket.gettime()
+			local time_delta = 0
+			if last_contact_time then
+				time_delta = current_time - last_contact_time
+			end
+			table.insert(trajectories, {position = pos, delta = time_delta})
+			print("Number of elements in trajectories:", #trajectories)
+			last_contact_time = current_time
+			last_position = pos
+		end
+	end
+end

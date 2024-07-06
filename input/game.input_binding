@@ -1,0 +1,12 @@
+key_trigger {
+  input: KEY_SPACE
+  action: "space"
+}
+key_trigger {
+  input: KEY_F
+  action: "save"
+}
+key_trigger {
+  input: KEY_R
+  action: "save_record"
+}

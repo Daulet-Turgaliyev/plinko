@@ -1,0 +1,28 @@
+local trajectories = { }
+
+local function animate_ball_to_basket(self, target_basket)
+	local trajectory = trajectories[target_basket]
+	if not trajectory then
+		print("Нет траектории для корзины: " .. target_basket)
+		return
+	end
+
+	local total_duration = 0
+	for i = 2, #trajectory do
+		local position = trajectory[i][1]
+		local delay = trajectory[i][2]
+		total_duration = total_duration + delay
+		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_LINEAR, delay, total_duration - delay)
+	end
+end
+
+function init(self)
+	-- Инициализация случайного числа
+	math.randomseed(os.time())
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("start_animation") then
+		animate_ball_to_basket(self, message.target_basket)
+	end
+end
