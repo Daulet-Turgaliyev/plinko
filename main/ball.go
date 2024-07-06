@@ -50,6 +50,11 @@ embedded_components {
     z: 0.0
     w: 1.0
   }
+  scale {
+    x: 0.8
+    y: 0.8
+    z: 1.0
+  }
 }
 embedded_components {
   id: "collisionobject"
@@ -57,8 +62,8 @@ embedded_components {
   data: "collision_shape: \"\"\n"
   "type: COLLISION_OBJECT_TYPE_DYNAMIC\n"
   "mass: 1.0\n"
-  "friction: 0.1\n"
-  "restitution: 0.5\n"
+  "friction: 0.0\n"
+  "restitution: 0.55\n"
   "group: \"default\"\n"
   "mask: \"default\"\n"
   "embedded_collision_shape {\n"
@@ -79,7 +84,7 @@ embedded_components {
   "    count: 1\n"
   "    id: \"\"\n"
   "  }\n"
-  "  data: 12.5\n"
+  "  data: 9.5\n"
   "}\n"
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"

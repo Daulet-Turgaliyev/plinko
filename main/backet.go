@@ -1,5 +1,5 @@
 embedded_components {
-  id: "sprite"
+  id: "leftSprite"
   type: "sprite"
   data: "default_animation: \"background\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
@@ -10,7 +10,7 @@ embedded_components {
   "}\n"
   ""
   position {
-    x: -284.0
+    x: -342.0
     y: -26.0
     z: 0.0
   }
@@ -27,7 +27,7 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "sprite1"
+  id: "rightSprite"
   type: "sprite"
   data: "default_animation: \"background\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
@@ -38,7 +38,7 @@ embedded_components {
   "}\n"
   ""
   position {
-    x: 392.0
+    x: 338.0
     y: -26.0
     z: 0.0
   }
@@ -55,7 +55,7 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "sprite2"
+  id: "bottomSprite"
   type: "sprite"
   data: "default_animation: \"background\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
@@ -66,8 +66,8 @@ embedded_components {
   "}\n"
   ""
   position {
-    x: 53.0
-    y: -569.0
+    x: -14.0
+    y: -566.0
     z: 0.0
   }
   rotation {
@@ -77,7 +77,7 @@ embedded_components {
     w: 1.0
   }
   scale {
-    x: 0.962361
+    x: 1.105372
     y: 0.072829
     z: 1.0
   }
@@ -96,8 +96,8 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      x: -283.0\n"
-  "      y: -44.0\n"
+  "      x: -337.0\n"
+  "      y: -10.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -111,7 +111,7 @@ embedded_components {
   "    id: \"\"\n"
   "  }\n"
   "  data: 35.0\n"
-  "  data: 600.0\n"
+  "  data: 564.6655\n"
   "  data: 35.2\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -145,8 +145,8 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      x: 390.0\n"
-  "      y: -46.0\n"
+  "      x: 339.0\n"
+  "      y: -16.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -160,7 +160,7 @@ embedded_components {
   "    id: \"\"\n"
   "  }\n"
   "  data: 35.0\n"
-  "  data: 600.0\n"
+  "  data: 576.53357\n"
   "  data: 35.2\n"
   "}\n"
   "linear_damping: 0.0\n"
@@ -194,8 +194,8 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      x: 60.0\n"
-  "      y: -563.0\n"
+  "      x: -18.0\n"
+  "      y: -560.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -208,7 +208,7 @@ embedded_components {
   "    count: 3\n"
   "    id: \"\"\n"
   "  }\n"
-  "  data: 335.52383\n"
+  "  data: 342.7267\n"
   "  data: 35.0\n"
   "  data: 35.2\n"
   "}\n"
@@ -243,8 +243,8 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      x: 56.0\n"
-  "      y: -445.0\n"
+  "      x: 0.0\n"
+  "      y: -549.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -257,8 +257,8 @@ embedded_components {
   "    count: 3\n"
   "    id: \"\"\n"
   "  }\n"
-  "  data: 273.84042\n"
-  "  data: 75.0\n"
+  "  data: 317.8572\n"
+  "  data: 52.574993\n"
   "  data: 0.5\n"
   "}\n"
   "linear_damping: 0.0\n"

@@ -1,11 +1,19 @@
 local trajectories = {}
 local last_position = nil
 local last_contact_time = nil
-local recording = true
-local backetID = "backet1"  -- Переносим сюда для динамической инициализации
+local recording = false
+local record_count = 5
+
+local function sanitize_filename(str)
+	local hashToString = str:gsub("[^%w]", "_")
+	local cleaned_string = string.gsub(hashToString, "hash____", "")
+	cleaned_string = string.gsub(cleaned_string, "_", "")
+	return cleaned_string
+end
 
 local function save_trajectories_to_file(trajectories, backetID)
-	local file_path = "settings/physics_baked/" .. backetID .. ".json"
+	local sanitized_backetID = sanitize_filename(backetID)
+	local file_path = "settings/physics_baked/" .. sanitized_backetID .. ".json"
 	local existing_data = {}
 
 	-- Check if the file exists and load its content
@@ -30,18 +38,23 @@ local function save_trajectories_to_file(trajectories, backetID)
 		end
 	end
 
-	-- Add new trajectories under a unique record key
-	local record_key = "record" .. next_index
-	existing_data[backetID][record_key] = {}
-	for _, entry in ipairs(trajectories) do
-		table.insert(existing_data[backetID][record_key], {
-			position = {
-				x = entry.position.x,
-				y = entry.position.y,
-				z = entry.position.z
-			},
-			delta = entry.delta
-		})
+	-- Add new trajectories under a unique record key if the limit is not reached
+	if next_index <= record_count then
+		local record_key = "record" .. next_index
+		existing_data[backetID][record_key] = {}
+		for _, entry in ipairs(trajectories) do
+			table.insert(existing_data[backetID][record_key], {
+				position = {
+					x = entry.position.x,
+					y = entry.position.y,
+					z = entry.position.z
+				},
+				delta = entry.delta
+			})
+		end
+	else
+		print("Maximum number of records reached for " .. backetID)
+		return
 	end
 
 	local json_data = json.encode(existing_data)
@@ -57,7 +70,6 @@ end
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.ball = go.get_id()
-	self.backetID = backetID  -- Инициализация backetID
 end
 
 function update(self, dt)
@@ -80,8 +92,11 @@ end
 function on_message(self, message_id, message, sender)
 	if message_id == hash("trigger_response") then
 		recording = false
+		local backetID = message.other_id
+		self.backetID = tostring(backetID)  -- Преобразуем backetID в строку и сохраняем в self
 		save_trajectories_to_file(trajectories, self.backetID)
-		go.delete()
+		--msg.post("/background#main", "respawn", nil)
+		go.delete(self.ball)
 	elseif message_id == hash("contact_point_response") then
 		if recording then
 			local pos = go.get_position(self.ball)
@@ -91,7 +106,6 @@ function on_message(self, message_id, message, sender)
 				time_delta = current_time - last_contact_time
 			end
 			table.insert(trajectories, {position = pos, delta = time_delta})
-			print("Number of elements in trajectories:", #trajectories)
 			last_contact_time = current_time
 			last_position = pos
 		end
