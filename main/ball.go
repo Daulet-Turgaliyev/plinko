@@ -62,7 +62,7 @@ embedded_components {
   data: "collision_shape: \"\"\n"
   "type: COLLISION_OBJECT_TYPE_DYNAMIC\n"
   "mass: 1.0\n"
-  "friction: 0.0\n"
+  "friction: 50.0\n"
   "restitution: 0.55\n"
   "group: \"default\"\n"
   "mask: \"default\"\n"

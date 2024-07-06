@@ -31,7 +31,8 @@ local function get_random_record(data)
 	end
 end
 
-local function animate_ball_to_basket(self, target_basket)
+local function load_trajectories(target_basket)
+
 	local backetName = backets[target_basket]
 
 	local file_path = "settings/physics_baked/" .. backetName
@@ -56,14 +57,21 @@ local function animate_ball_to_basket(self, target_basket)
 	local record = get_random_record(existing_data)
 
 	local trajectories = {}
-	
-	
+
+
 	for key, value in pairs(record) do
 		local trajectory = {
 			position = vmath.vector3(value.position.x, value.position.y, value.position.z),
 			delta = value.delta }
-		table.insert(trajectories, trajectory)
-	end
+			table.insert(trajectories, trajectory)
+		end
+
+		return trajectories
+end
+
+local function animate_ball_to_basket(self, target_basket)
+
+	local trajectories = load_trajectories(target_basket)
 
 	local total_duration = 0
 	for i = 2, #trajectories do

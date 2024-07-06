@@ -1,7 +1,7 @@
 local trajectories = {}
 local last_position = nil
 local last_contact_time = nil
-local recording = false
+local recording = true
 local record_count = 5
 
 local function sanitize_filename(str)
@@ -10,6 +10,21 @@ local function sanitize_filename(str)
 	cleaned_string = string.gsub(cleaned_string, "_", "")
 	return cleaned_string
 end
+
+local function record_position(self)
+		--[[if recording then
+		local pos = go.get_position(self.ball)
+		local current_time = socket.gettime()
+		local time_delta = 0
+		if last_contact_time then
+			time_delta = current_time - last_contact_time
+		end
+		table.insert(trajectories, {position = pos, delta = time_delta})
+		last_contact_time = current_time
+		last_position = pos
+	end]]
+end
+
 
 local function save_trajectories_to_file(trajectories, backetID)
 	local sanitized_backetID = sanitize_filename(backetID)
@@ -46,8 +61,7 @@ local function save_trajectories_to_file(trajectories, backetID)
 			table.insert(existing_data[backetID][record_key], {
 				position = {
 					x = entry.position.x,
-					y = entry.position.y,
-					z = entry.position.z
+					y = entry.position.y
 				},
 				delta = entry.delta
 			})
@@ -70,6 +84,30 @@ end
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	self.ball = go.get_id()
+
+	record_position(self)
+
+	-- Инициализация таймера
+	self.timer_interval = 0.1 -- Интервал времени в секундах
+	self.timer_id = nil -- Идентификатор таймера
+
+	-- Запускаем таймер
+	self.timer_id = timer.delay(self.timer_interval, true, function(self, handle, time_elapsed)
+		on_timer_tick(self, handle, time_elapsed)
+	end)
+
+end
+
+function on_timer_tick(self, handle, time_elapsed)
+	record_position(self)
+end
+
+function final(self)
+	-- Остановка таймера при завершении объекта
+	if self.timer_id then
+		timer.cancel(self.timer_id)
+		self.timer_id = nil
+	end
 end
 
 function update(self, dt)
@@ -90,24 +128,15 @@ function on_input(self, action_id, action)
 end
 
 function on_message(self, message_id, message, sender)
-	if message_id == hash("trigger_response") then
+		--[[if message_id == hash("trigger_response") then
 		recording = false
 		local backetID = message.other_id
-		self.backetID = tostring(backetID)  -- Преобразуем backetID в строку и сохраняем в self
+		self.backetID = tostring(backetID) 
 		save_trajectories_to_file(trajectories, self.backetID)
-		--msg.post("/background#main", "respawn", nil)
+		msg.post("/background#main", "respawn", nil)
+		record_position(self)
 		go.delete(self.ball)
 	elseif message_id == hash("contact_point_response") then
-		if recording then
-			local pos = go.get_position(self.ball)
-			local current_time = socket.gettime()
-			local time_delta = 0
-			if last_contact_time then
-				time_delta = current_time - last_contact_time
-			end
-			table.insert(trajectories, {position = pos, delta = time_delta})
-			last_contact_time = current_time
-			last_position = pos
-		end
-	end
+		record_position(self)
+	end]]
 end
