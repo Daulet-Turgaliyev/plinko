@@ -1,0 +1,104 @@
+{
+	"baskets": [
+		{
+			"basket_name": "basketA",
+			"spawn_position": {
+				"X": 19,
+				"Y": 99
+			},
+			"probability": 1,
+			"price": -20,
+			"records": "/path/to/basketA.json"
+		},
+		{
+			"basket_name": "basketB",
+			"spawn_position": {
+				"X": 86,
+				"Y": 99
+			},
+			"probability": 0,
+			"price": 10,
+			"records": "/path/to/basketB.json"
+		},
+		{
+			"basket_name": "basketC",
+			"spawn_position": {
+				"X": 154,
+				"Y": 99
+			},
+			"probability": 0,
+			"price": 5,
+			"records": "/path/to/basketC.json"
+		},
+		{
+			"basket_name": "basketD",
+			"spawn_position": {
+				"X": 222,
+				"Y": 99
+			},
+			"probability": 0,
+			"price": 15,
+			"records": "/path/to/basketD.json"
+		},
+		{
+			"basket_name": "basketE",
+			"spawn_position": {
+				"X": 290,
+				"Y": 99
+			},
+			"probability": 0,
+			"price": 20,
+			"records": "/path/to/basketE.json"
+		},
+		{
+			"basket_name": "basketF",
+			"spawn_position": {
+				"X": 358,
+				"Y": 99
+			},
+			"probability": 0,
+			"price": -10,
+			"records": "/path/to/basketF.json"
+		},
+		{
+			"basket_name": "basketG",
+			"spawn_position": {
+				"X": 426,
+				"Y": 99
+			},
+			"probability": 0.1,
+			"price": 30,
+			"records": "/path/to/basketG.json"
+		},
+		{
+			"basket_name": "basketH",
+			"spawn_position": {
+				"X": 494,
+				"Y": 99
+			},
+			"probability": 0,
+			"price": -5,
+			"records": "/path/to/basketH.json"
+		},
+		{
+			"basket_name": "basketI",
+			"spawn_position": {
+				"X": 562,
+				"Y": 99
+			},
+			"probability": 0,
+			"price": 25,
+			"records": "/path/to/basketI.json"
+		},
+		{
+			"basket_name": "basketJ",
+			"spawn_position": {
+				"X": 630,
+				"Y": 99
+			},
+			"probability": 1,
+			"price": 0,
+			"records": "/path/to/basketJ.json"
+		}
+	]
+}

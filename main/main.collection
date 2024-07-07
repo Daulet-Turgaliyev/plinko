@@ -1,204 +1,4 @@
 name: "main"
-instances {
-  id: "backetE"
-  prototype: "/main/backet.go"
-  position {
-    x: 290.0
-    y: 99.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.1
-    y: 0.1
-    z: 1.0
-  }
-}
-instances {
-  id: "backetI"
-  prototype: "/main/backet.go"
-  position {
-    x: 562.0
-    y: 99.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.1
-    y: 0.1
-    z: 1.0
-  }
-}
-instances {
-  id: "backetH"
-  prototype: "/main/backet.go"
-  position {
-    x: 494.0
-    y: 99.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.1
-    y: 0.1
-    z: 1.0
-  }
-}
-instances {
-  id: "backetC"
-  prototype: "/main/backet.go"
-  position {
-    x: 154.0
-    y: 99.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.1
-    y: 0.1
-    z: 1.0
-  }
-}
-instances {
-  id: "backetB"
-  prototype: "/main/backet.go"
-  position {
-    x: 86.0
-    y: 99.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.1
-    y: 0.1
-    z: 1.0
-  }
-}
-instances {
-  id: "backetG"
-  prototype: "/main/backet.go"
-  position {
-    x: 426.0
-    y: 99.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.1
-    y: 0.1
-    z: 1.0
-  }
-}
-instances {
-  id: "backetF"
-  prototype: "/main/backet.go"
-  position {
-    x: 358.0
-    y: 99.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.1
-    y: 0.1
-    z: 1.0
-  }
-}
-instances {
-  id: "backetA"
-  prototype: "/main/backet.go"
-  position {
-    x: 19.0
-    y: 99.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.1
-    y: 0.1
-    z: 1.0
-  }
-}
-instances {
-  id: "backetD"
-  prototype: "/main/backet.go"
-  position {
-    x: 222.0
-    y: 99.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.1
-    y: 0.1
-    z: 1.0
-  }
-}
-instances {
-  id: "basketJ"
-  prototype: "/main/backet.go"
-  position {
-    x: 630.0
-    y: 99.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 0.1
-    y: 0.1
-    z: 1.0
-  }
-}
 scale_along_z: 0
 embedded_instances {
   id: "background"
@@ -438,10 +238,46 @@ embedded_instances {
   "  property_decls {\n"
   "  }\n"
   "}\n"
+  "components {\n"
+  "  id: \"backet_loader\"\n"
+  "  component: \"/main/basket_loader.script\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "  property_decls {\n"
+  "  }\n"
+  "}\n"
   "embedded_components {\n"
   "  id: \"ball_factory\"\n"
   "  type: \"factory\"\n"
   "  data: \"prototype: \\\"/main/ball.go\\\"\\n"
+  "load_dynamically: false\\n"
+  "dynamic_prototype: false\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "  }\n"
+  "  rotation {\n"
+  "    x: 0.0\n"
+  "    y: 0.0\n"
+  "    z: 0.0\n"
+  "    w: 1.0\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"basket_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/main/basket.go\\\"\\n"
   "load_dynamically: false\\n"
   "dynamic_prototype: false\\n"
   "\"\n"
@@ -462,36 +298,6 @@ embedded_instances {
     x: 0.0
     y: 0.0
     z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-  scale3 {
-    x: 1.0
-    y: 1.0
-    z: 1.0
-  }
-}
-embedded_instances {
-  id: "GameField"
-  children: "backetA"
-  children: "backetB"
-  children: "backetC"
-  children: "backetD"
-  children: "backetE"
-  children: "backetF"
-  children: "backetG"
-  children: "backetH"
-  children: "backetI"
-  children: "basketJ"
-  data: ""
-  position {
-    x: 0.0
-    y: 0.0
-    z: -0.2
   }
   rotation {
     x: 0.0

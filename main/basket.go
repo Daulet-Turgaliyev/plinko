@@ -1,3 +1,33 @@
+components {
+  id: "backet"
+  component: "/main/basket.script"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+components {
+  id: "explosion"
+  component: "/main/explosion.particlefx"
+  position {
+    x: 0.0
+    y: 0.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
 embedded_components {
   id: "leftSprite"
   type: "sprite"
@@ -237,14 +267,14 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"default\"\n"
-  "mask: \"default\"\n"
+  "group: \"Backet\"\n"
+  "mask: \"Ball\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
   "      x: 0.0\n"
-  "      y: -513.0\n"
+  "      y: -230.0\n"
   "      z: 0.0\n"
   "    }\n"
   "    rotation {\n"
@@ -258,13 +288,89 @@ embedded_components {
   "    id: \"\"\n"
   "  }\n"
   "  data: 317.8572\n"
-  "  data: 16.082233\n"
+  "  data: 321.13934\n"
   "  data: 0.5\n"
   "}\n"
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
   "bullet: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "background"
+  type: "sprite"
+  data: "default_animation: \"blackimgae\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  "textures {\n"
+  "  sampler: \"texture_sampler\"\n"
+  "  texture: \"/assets/GameElements/GameElements.atlas\"\n"
+  "}\n"
+  ""
+  position {
+    x: -12.0
+    y: -26.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 3.68
+    y: 5.762036
+    z: 3.68
+  }
+}
+embedded_components {
+  id: "label"
+  type: "label"
+  data: "size {\n"
+  "  x: 128.0\n"
+  "  y: 32.0\n"
+  "  z: 0.0\n"
+  "  w: 0.0\n"
+  "}\n"
+  "color {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "outline {\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "shadow {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "leading: 1.0\n"
+  "tracking: 0.0\n"
+  "pivot: PIVOT_CENTER\n"
+  "blend_mode: BLEND_MODE_ALPHA\n"
+  "line_break: false\n"
+  "text: \"\"\n"
+  "font: \"/builtins/fonts/default.font\"\n"
+  "material: \"/builtins/fonts/label-df.material\"\n"
   ""
   position {
     x: 0.0

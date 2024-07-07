@@ -1,0 +1,53 @@
+function init(self)
+	-- Укажите абсолютный путь к JSON-конфигурации
+	local config_path = "settings/baskets_config.json"  -- Укажите относительный путь без начального "/"
+	print("Trying to load config from: " .. config_path)
+
+	local file = io.open(config_path, "r")
+	if file then
+		local content = file:read("*a")
+		file:close()
+		print("JSON configuration loaded successfully")
+
+		local config, decode_err = json.decode(content)
+
+		if config then
+			print("JSON decoded successfully")
+		else
+			print("Error decoding JSON: " .. decode_err)
+		end
+
+		
+		-- Инициализация таблицы для хранения данных корзинок
+		self.baskets = {}
+
+		-- Проверка, есть ли корзинки в конфигурации
+		if config and config.baskets then
+			for _, basket in ipairs(config.baskets) do
+				-- Создание корзинки
+				local pos = vmath.vector3(basket.spawn_position.X, basket.spawn_position.Y, -0.2)
+				local id = factory.create("#basket_factory", pos, nil, { price = basket.price })
+				-- Установка размера корзинки
+				go.set_scale(vmath.vector3(0.1, 0.1, 0.1), id)
+				-- Преобразование идентификатора объекта в строку
+				local id_str = tostring(id)
+				-- Сохранение данных корзинки в таблице
+				self.baskets[id_str] = {
+					name = basket.basket_name,
+					price = basket.price,
+					probability = basket.probability,
+					records = basket.records
+				}
+			end
+
+			-- Отправка сообщения с таблицей self.baskets
+			msg.post("/background#main", "baskets_loaded", { baskets = self.baskets })
+		
+		
+		else
+			print("Error in JSON configuration structure")
+		end
+	else
+		print("Error opening JSON configuration file")
+	end
+end

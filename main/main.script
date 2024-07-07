@@ -1,30 +1,59 @@
 go.property("ball_factory", resource.factory("/main/ball.factory"))
 
-
-
 function init(self)
 	msg.post(".", "acquire_input_focus")
 	msg.post("@render:", "use_fixed_fit_projection", { near = -1, far = 1 })
 	msg.post("/localGeneratorfactory#locationGenerator", "create_pyramid", nil)	
+	msg.post("/localGeneratorfactory#backet_loader", "start_load")
+
+	-- Инициализация таблицы для хранения данных корзинок
+	self.baskets = {}
 end
 
 function on_input(self, action_id, action)
 	if action_id == hash("space") and action.pressed then
 
 		math.randomseed(os.time())
-		
-		local random_number = math.random(4, 4)
-		
+
+		local target_basket_name = get_random_basket(self.baskets)
+
 		self.ball = factory.create("/localGeneratorfactory#ball_factory", vmath.vector3(320, 1000, 0))
-		msg.post(self.ball, "start_animation", {target_basket = 1 })
+		msg.post(self.ball, "start_animation", { target_basket = target_basket_name })
 	end
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("respawn") then
-
 		local random_offset = math.random(-15, 15)
 		self.ball = factory.create("/localGeneratorfactory#ball_factory", vmath.vector3(320 + random_offset, 1000, 0))
-		
+	end
+
+	if message_id == hash("baskets_loaded") then
+		local received_baskets = message.baskets
+		-- Обработка полученных данных корзинок
+		for id_str, basket in pairs(received_baskets) do
+			self.baskets[id_str] = basket
+			--[[print("Basket ID:", id_str)
+			print("Name:", basket.name)
+			print("Price:", basket.price)
+			print("Probability:", basket.probability)]]
+		end
+	end
+end
+
+function get_random_basket(baskets)
+	local total_probability = 0
+	for _, basket in pairs(baskets) do
+		total_probability = total_probability + basket.probability
+	end
+
+	local random_value = math.random() * total_probability
+	local cumulative_probability = 0
+
+	for _, basket in pairs(baskets) do
+		cumulative_probability = cumulative_probability + basket.probability
+		if random_value <= cumulative_probability then
+			return basket.name
+		end
 	end
 end

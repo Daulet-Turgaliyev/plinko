@@ -49,8 +49,9 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 20.0\n"
   "restitution: 0.55\n"
-  "group: \"default\"\n"
-  "mask: \"default\"\n"
+  "group: \"Ball\"\n"
+  "mask: \"Pin\"\n"
+  "mask: \"Backet\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"
@@ -75,6 +76,29 @@ embedded_components {
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
   "bullet: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "sound"
+  type: "sound"
+  data: "sound: \"/assets/sounds/DM-CGS-07.wav\"\n"
+  "looping: 0\n"
+  "group: \"master\"\n"
+  "gain: 1.0\n"
+  "pan: 0.0\n"
+  "speed: 1.0\n"
+  "loopcount: 0\n"
   ""
   position {
     x: 0.0
