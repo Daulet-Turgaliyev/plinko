@@ -1,6 +1,6 @@
 name: "main"
 instances {
-  id: "backetOne"
+  id: "backetE"
   prototype: "/main/backet.go"
   position {
     x: 290.0
@@ -20,7 +20,7 @@ instances {
   }
 }
 instances {
-  id: "backetTwo"
+  id: "backetI"
   prototype: "/main/backet.go"
   position {
     x: 562.0
@@ -40,7 +40,7 @@ instances {
   }
 }
 instances {
-  id: "backetThree"
+  id: "backetH"
   prototype: "/main/backet.go"
   position {
     x: 494.0
@@ -60,7 +60,7 @@ instances {
   }
 }
 instances {
-  id: "backetFour"
+  id: "backetC"
   prototype: "/main/backet.go"
   position {
     x: 154.0
@@ -80,7 +80,7 @@ instances {
   }
 }
 instances {
-  id: "backetFive"
+  id: "backetB"
   prototype: "/main/backet.go"
   position {
     x: 86.0
@@ -100,7 +100,7 @@ instances {
   }
 }
 instances {
-  id: "backetSix"
+  id: "backetG"
   prototype: "/main/backet.go"
   position {
     x: 426.0
@@ -120,7 +120,7 @@ instances {
   }
 }
 instances {
-  id: "backetSeven"
+  id: "backetF"
   prototype: "/main/backet.go"
   position {
     x: 358.0
@@ -140,7 +140,7 @@ instances {
   }
 }
 instances {
-  id: "backetEight"
+  id: "backetA"
   prototype: "/main/backet.go"
   position {
     x: 19.0
@@ -160,7 +160,7 @@ instances {
   }
 }
 instances {
-  id: "backetNine"
+  id: "backetD"
   prototype: "/main/backet.go"
   position {
     x: 222.0
@@ -180,7 +180,7 @@ instances {
   }
 }
 instances {
-  id: "basketZero"
+  id: "basketJ"
   prototype: "/main/backet.go"
   position {
     x: 630.0
@@ -441,7 +441,7 @@ embedded_instances {
   "embedded_components {\n"
   "  id: \"ball_factory\"\n"
   "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/main/recover_ball.go\\\"\\n"
+  "  data: \"prototype: \\\"/main/ball.go\\\"\\n"
   "load_dynamically: false\\n"
   "dynamic_prototype: false\\n"
   "\"\n"
@@ -477,16 +477,16 @@ embedded_instances {
 }
 embedded_instances {
   id: "GameField"
-  children: "backetEight"
-  children: "backetFive"
-  children: "backetFour"
-  children: "backetNine"
-  children: "backetOne"
-  children: "backetSeven"
-  children: "backetSix"
-  children: "backetThree"
-  children: "backetTwo"
-  children: "basketZero"
+  children: "backetA"
+  children: "backetB"
+  children: "backetC"
+  children: "backetD"
+  children: "backetE"
+  children: "backetF"
+  children: "backetG"
+  children: "backetH"
+  children: "backetI"
+  children: "basketJ"
   data: ""
   position {
     x: 0.0

@@ -20,6 +20,11 @@ embedded_components {
     z: 0.0
     w: 1.0
   }
+  scale {
+    x: 1.3
+    y: 1.3
+    z: 1.0
+  }
 }
 embedded_components {
   id: "pin"
@@ -28,7 +33,7 @@ embedded_components {
   "type: COLLISION_OBJECT_TYPE_STATIC\n"
   "mass: 0.0\n"
   "friction: 100.0\n"
-  "restitution: 0.3\n"
+  "restitution: 0.4\n"
   "group: \"default\"\n"
   "mask: \"default\"\n"
   "embedded_collision_shape {\n"
@@ -49,7 +54,7 @@ embedded_components {
   "    count: 1\n"
   "    id: \"\"\n"
   "  }\n"
-  "  data: 12.5\n"
+  "  data: 8.5\n"
   "}\n"
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"

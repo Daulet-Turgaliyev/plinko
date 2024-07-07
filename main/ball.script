@@ -1,21 +1,25 @@
 local backets = 
 {
-	[1] = "backetOne.json",
-	[2] = "backetTwo.json",
-	[3] = "backetThree.json",
-	[4] = "backetFour.json",
-	[5] = "backetFive.json",
-	[6] = "backetSix.json",
-	[7] = "backetSeven.json",
-	[8] = "backetEight.json",
-	[9] = "backetNine.json",
-	[10] = "backetZero.json"
+	[1] = "backetA.json",
+	[2] = "backetB.json",
+	[3] = "backetC.json",
+	[4] = "backetD.json",
+	[5] = "backetE.json",
+	[6] = "backetF.json",
+	[7] = "backetG.json",
+	[8] = "backetH.json",
+	[9] = "backetI.json",
+	[10] = "backetJ.json"
 }
+
+
+
 
 local function get_random_record(data)
 	local records = {}
-
+	
 	for key, value in pairs(data) do
+		
 		for sub_key, sub_value in pairs(value) do
 			if sub_key:match("record%d+") then
 				table.insert(records, sub_value)
@@ -58,10 +62,11 @@ local function load_trajectories(target_basket)
 
 	local trajectories = {}
 
+	--print("Random: " .. record[1].position.x)
 
 	for key, value in pairs(record) do
 		local trajectory = {
-			position = vmath.vector3(value.position.x, value.position.y, value.position.z),
+			position = vmath.vector3(value.position.x, value.position.y, 0),
 			delta = value.delta }
 			table.insert(trajectories, trajectory)
 		end
