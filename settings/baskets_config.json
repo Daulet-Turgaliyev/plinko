@@ -8,7 +8,7 @@
 			},
 			"probability": 1,
 			"price": -20,
-			"records": "/path/to/basketA.json"
+			"records": "settings/physics_baked/basketA.json"
 		},
 		{
 			"basket_name": "basketB",
@@ -18,7 +18,7 @@
 			},
 			"probability": 0,
 			"price": 10,
-			"records": "/path/to/basketB.json"
+			"records": "settings/physics_baked/basketB.json"
 		},
 		{
 			"basket_name": "basketC",
@@ -28,7 +28,7 @@
 			},
 			"probability": 0,
 			"price": 5,
-			"records": "/path/to/basketC.json"
+			"records": "settings/physics_baked/basketC.json"
 		},
 		{
 			"basket_name": "basketD",
@@ -38,7 +38,7 @@
 			},
 			"probability": 0,
 			"price": 15,
-			"records": "/path/to/basketD.json"
+			"records": "settings/physics_baked/basketD.json"
 		},
 		{
 			"basket_name": "basketE",
@@ -48,7 +48,7 @@
 			},
 			"probability": 0,
 			"price": 20,
-			"records": "/path/to/basketE.json"
+			"records": "settings/physics_baked/basketE.json"
 		},
 		{
 			"basket_name": "basketF",
@@ -58,7 +58,7 @@
 			},
 			"probability": 0,
 			"price": -10,
-			"records": "/path/to/basketF.json"
+			"records": "settings/physics_baked/basketF.json"
 		},
 		{
 			"basket_name": "basketG",
@@ -68,7 +68,7 @@
 			},
 			"probability": 0.1,
 			"price": 30,
-			"records": "/path/to/basketG.json"
+			"records": "settings/physics_baked/basketG.json"
 		},
 		{
 			"basket_name": "basketH",
@@ -78,7 +78,7 @@
 			},
 			"probability": 0,
 			"price": -5,
-			"records": "/path/to/basketH.json"
+			"records": "settings/physics_baked/basketH.json"
 		},
 		{
 			"basket_name": "basketI",
@@ -88,7 +88,7 @@
 			},
 			"probability": 0,
 			"price": 25,
-			"records": "/path/to/basketI.json"
+			"records": "settings/physics_baked/basketI.json"
 		},
 		{
 			"basket_name": "basketJ",
@@ -98,7 +98,7 @@
 			},
 			"probability": 1,
 			"price": 0,
-			"records": "/path/to/basketJ.json"
+			"records": "settings/physics_baked/basketJ.json"
 		}
 	]
 }

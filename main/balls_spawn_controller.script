@@ -1,0 +1,62 @@
+local MAX_BALLS = 100
+local RESTORE_AMOUNT = 5
+local RESTORE_INTERVAL = 60 -- время в секундах
+
+local balls = MAX_BALLS
+local timer = RESTORE_INTERVAL
+
+function init(self)
+	self.restore_timer = timer
+	msg.post(".", "acquire_input_focus")
+end
+
+function update(self, dt)
+	-- Восстанавливаем шарики
+	if balls < MAX_BALLS then
+		self.restore_timer = self.restore_timer - dt
+		if self.restore_timer <= 0 then
+			add_balls(RESTORE_AMOUNT)
+			self.restore_timer = RESTORE_INTERVAL
+		end
+	else
+		self.restore_timer = RESTORE_INTERVAL
+	end
+
+	-- Обновляем таймер на GUI
+	local remaining_time = math.floor(self.restore_timer)
+	if balls < MAX_BALLS then
+		local minutes = math.floor(remaining_time / 60)
+		local seconds = remaining_time % 60
+		msg.post("/main/mainScreen.gui_script", "update_timer", { text = string.format("+5 balls in %02d:%02d", minutes, seconds) })
+	else
+		msg.post("/main/mainScreen.gui_script", "update_timer", { text = "You got all the balls" })
+	end
+end
+
+function spawn_ball()
+	if balls > 0 then
+		balls = balls - 1
+	else
+		print("No more balls to spawn!")
+	end
+end
+
+function spawn_balls(count)
+	for i = 1, count do
+		spawn_ball()
+	end
+end
+
+function add_balls(count)
+	balls = math.min(balls + count, MAX_BALLS)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("spawn_ball") then
+		spawn_ball()
+	elseif message_id == hash("spawn_balls") then
+		spawn_balls(message.count)
+	elseif message_id == hash("add_balls") then
+		add_balls(message.count)
+	end
+end
