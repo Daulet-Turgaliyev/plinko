@@ -43,7 +43,17 @@ shared_state = 1
 [physics]
 gravity_y = -1000.0
 scale = 0.01
+max_collision_object_count = 256
 
 [sprite]
 max_count = 512
+
+[particle_fx]
+max_count = 128
+
+[collectionfactory]
+max_count = 256
+
+[sound]
+max_component_count = 128
 

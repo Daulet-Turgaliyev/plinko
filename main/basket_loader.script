@@ -41,7 +41,7 @@ function init(self)
 			end
 
 			-- Отправка сообщения с таблицей self.baskets
-			msg.post("/background#main", "baskets_loaded", { baskets = self.baskets })
+			msg.post("/localGeneratorfactory#balls_spawn_controller", "baskets_loaded", { baskets = self.baskets })
 		
 		
 		else

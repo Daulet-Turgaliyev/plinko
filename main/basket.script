@@ -23,6 +23,7 @@ function on_message(self, message_id, message, sender)
 		if message.enter then
 			particlefx.play("#explosion")
 			local other_id = message.other_id
+			msg.post("/background#mainScreen", "update_score", { price = self.price })
 			go.delete(other_id) 
 		end
 	end
