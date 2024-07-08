@@ -1,21 +1,36 @@
+local ball_counter = require "main/ball_counter"
+local text_event = require "main/debug_text_events"
+
 go.property("price", 0)
+go.property("basket_id", 0) -- добавляем идентификатор корзины
 
-local function set_positive_text(price)
-	go.set("#label", "color", vmath.vector4(0.0431, 0.7843, 0.2667, 0.8))
-	label.set_text("#label", "+" .. price)
+local function set_price_text(self)
+	local color = self.price > 0 and vmath.vector4(0.0431, 0.7843, 0.2667, 0.8) or vmath.vector4(1, 0, 0, 1)
+	go.set("#price_label", "color", color)
+	label.set_text("#price_label", string.format("%+d", self.price))
 end
 
-local function set_negative_text(price)
-	go.set("#label", "color", vmath.vector4(1, 0, 0, 1))
-	label.set_text("#label", tostring(price))
+local function set_debug_text(self)
+	local count = self.count
+	local total_balls = ball_counter.get_total_balls()
+	local percentage = (total_balls == 0) and 0 or (count / total_balls) * 100
+	label.set_text("#debug_label", string.format("Count: %d\nP: %.2f%%", count, percentage))
 end
 
-function init(self)	
-	if self.price > 0 then
-		set_positive_text(self.price)
-	else
-		set_negative_text(self.price)
-	end
+function init(self)
+	self.count = 0
+	set_price_text(self)
+	set_debug_text(self) 
+
+	local id = go.get_id()
+	text_event.add_method(id, function()
+		set_debug_text(self)
+	end)
+end
+
+local function disable_ball(ball_id)
+	msg.post(ball_id, "reset_and_disable")
+	msg.post("/localGeneratorfactory#balls_spawn_controller", "release_ball", { ball = ball_id })
 end
 
 function on_message(self, message_id, message, sender)
@@ -24,7 +39,18 @@ function on_message(self, message_id, message, sender)
 			particlefx.play("#explosion")
 			local other_id = message.other_id
 			msg.post("/background#mainScreen", "update_score", { price = self.price })
-			go.delete(other_id) 
+
+			-- Отключаем шарик вместо удаления
+			disable_ball(other_id)
+
+			-- Обновляем количество шариков и процентное соотношение
+			self.count = self.count + 1
+			ball_counter.increment_total_balls()
+			text_event.call_all_methods()
 		end
 	end
+end
+
+function final(self)
+	text_event.remove_method(go.get_id())
 end

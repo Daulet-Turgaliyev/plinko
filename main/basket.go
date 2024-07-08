@@ -337,7 +337,7 @@ embedded_components {
   }
 }
 embedded_components {
-  id: "label"
+  id: "price_label"
   type: "label"
   data: "size {\n"
   "  x: 512.0\n"
@@ -382,5 +382,58 @@ embedded_components {
     y: 0.0
     z: 0.0
     w: 1.0
+  }
+}
+embedded_components {
+  id: "debug_label"
+  type: "label"
+  data: "size {\n"
+  "  x: 1024.0\n"
+  "  y: 1024.0\n"
+  "  z: 0.0\n"
+  "  w: 0.0\n"
+  "}\n"
+  "color {\n"
+  "  x: 0.302\n"
+  "  y: 0.302\n"
+  "  z: 0.302\n"
+  "  w: 1.0\n"
+  "}\n"
+  "outline {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "shadow {\n"
+  "  x: 0.0\n"
+  "  y: 0.0\n"
+  "  z: 0.0\n"
+  "  w: 1.0\n"
+  "}\n"
+  "leading: 1.0\n"
+  "tracking: 0.0\n"
+  "pivot: PIVOT_CENTER\n"
+  "blend_mode: BLEND_MODE_ADD\n"
+  "line_break: false\n"
+  "text: \"100\"\n"
+  "font: \"/assets/big_letters.font\"\n"
+  "material: \"/builtins/fonts/label.material\"\n"
+  ""
+  position {
+    x: 0.0
+    y: 772.0
+    z: 1.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+  scale {
+    x: 0.5
+    y: 0.5
+    z: 0.5
   }
 }
