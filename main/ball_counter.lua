@@ -1,13 +1,13 @@
-local M = {}
+local DATA = {}
 
-M.total_balls = 0
+DATA.total_balls = 0
 
-function M.increment_total_balls()
-	M.total_balls = M.total_balls + 1
+function DATA.increment_total_balls()
+	DATA.total_balls = DATA.total_balls + 1
 end
 
-function M.get_total_balls()
-	return M.total_balls
+function DATA.get_total_balls()
+	return DATA.total_balls
 end
 
-return M
+return DATA

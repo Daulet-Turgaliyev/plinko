@@ -2,7 +2,7 @@ go.property("screen_center", vmath.vector3(0, 0, 0))
 go.property("peg_spacing", 50)
 go.property("rows", 10)
 
-local function create_pyramid(self)
+local function createPyramid(self)
 	local rows = self.rows
 	local spacing = self.peg_spacing
 	local start_y = self.screen_center.y
@@ -19,11 +19,10 @@ local function create_pyramid(self)
 		end
 		start_y = start_y - spacing
 	end
-	
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("create_pyramid") then
-		create_pyramid(self)
+		createPyramid(self)
 	end
 end

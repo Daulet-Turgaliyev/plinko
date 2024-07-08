@@ -1,7 +1,7 @@
 local last_position = nil
 local last_contact_time = nil
 local record_count = 5
-local timer_interval = .2
+local timer_interval = 0.2
 
 local function sanitize_filename(str)
 	local hashToString = str:gsub("[^%w]", "_")
@@ -11,7 +11,7 @@ local function sanitize_filename(str)
 end
 
 local function record_position(self)
-		if self.recording then
+	if self.recording then
 		local pos = go.get_position(self.ball)
 		local current_time = socket.gettime()
 		local time_delta = 0
@@ -24,12 +24,11 @@ local function record_position(self)
 	end
 end
 
-local function save_trajectories_to_file(trajectories, backetID)
-	local sanitized_backetID = sanitize_filename(backetID)
-	local file_path = "settings/physics_baked/" .. sanitized_backetID .. ".json"
+local function save_trajectories_to_file(trajectories, basketID)
+	local sanitized_basketID = sanitize_filename(basketID)
+	local file_path = "settings/physics_baked/" .. sanitized_basketID .. ".json"
 	local existing_data = {}
 
-	-- Check if the file exists and load its content
 	local file = io.open(file_path, "r")
 	if file then
 		local content = file:read("*a")
@@ -37,26 +36,23 @@ local function save_trajectories_to_file(trajectories, backetID)
 		file:close()
 	end
 
-	-- Initialize the backetID table if it does not exist
-	if not existing_data[backetID] then
-		existing_data[backetID] = {}
+	if not existing_data[basketID] then
+		existing_data[basketID] = {}
 	end
 
-	-- Find the next record index
 	local next_index = 1
-	for key, _ in pairs(existing_data[backetID]) do
+	for key, _ in pairs(existing_data[basketID]) do
 		local index = tonumber(key:match("record(%d+)"))
 		if index and index >= next_index then
 			next_index = index + 1
 		end
 	end
 
-	-- Add new trajectories under a unique record key if the limit is not reached
 	if next_index <= record_count then
 		local record_key = "record" .. next_index
-		existing_data[backetID][record_key] = {}
+		existing_data[basketID][record_key] = {}
 		for _, entry in ipairs(trajectories) do
-			table.insert(existing_data[backetID][record_key], {
+			table.insert(existing_data[basketID][record_key], {
 				position = {
 					x = entry.position.x,
 					y = entry.position.y
@@ -65,7 +61,7 @@ local function save_trajectories_to_file(trajectories, backetID)
 			})
 		end
 	else
-		print("Maximum number of records reached for " .. backetID)
+		print("Максимальное количество записей достигнуто для " .. basketID)
 		return
 	end
 
@@ -75,7 +71,7 @@ local function save_trajectories_to_file(trajectories, backetID)
 		file:write(json_data)
 		file:close()
 	else
-		print("Error: Unable to open file for writing:", file_path)
+		print("Ошибка: Невозможно открыть файл для записи:", file_path)
 	end
 end
 
@@ -86,21 +82,12 @@ function init(self)
 	self.trajectories = {}
 	record_position(self)
 
-	-- Инициализация таймера
-	self.timer_id = nil -- Идентификатор таймера
-	-- Запускаем таймер
-	self.timer_id = timer.delay(timer_interval, true, function(self, handle, time_elapsed)
-		on_timer_tick(self, handle, time_elapsed)
+	self.timer_id = timer.delay(timer_interval, true, function()
+		record_position(self)
 	end)
-
-end
-
-function on_timer_tick(self, handle, time_elapsed)
-	record_position(self)
 end
 
 function final(self)
-	-- Остановка таймера при завершении объекта
 	if self.timer_id then
 		timer.cancel(self.timer_id)
 		self.timer_id = nil
@@ -118,20 +105,18 @@ end
 
 function on_input(self, action_id, action)
 	if action_id == hash("save_record") and action.pressed then
-		print("Number of elements in trajectories:", #self.trajectories)
-		save_trajectories_to_file(self.trajectories, self.backetID)
-		self.trajectories = {}  -- Сброс траекторий после сохранения
+		print("Количество элементов в траекториях:", #self.trajectories)
+		save_trajectories_to_file(self.trajectories, self.basketID)
+		self.trajectories = {}
 	end
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash("trigger_response") then
 		record_position(self)
-		
 		self.recording = false
-		local backetID = message.other_id
-		self.backetID = tostring(backetID) 
-		save_trajectories_to_file(self.trajectories, self.backetID)
+		self.basketID = tostring(message.other_id)
+		save_trajectories_to_file(self.trajectories, self.basketID)
 		msg.post("/background#main", "respawn", nil)
 		go.delete(self.ball)
 	elseif message_id == hash("contact_point_response") then

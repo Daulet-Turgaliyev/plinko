@@ -1,20 +1,19 @@
--- debug_text_events.lua
-local M = {}
+local EVENTS = {}
 
-M.methods = {}
+EVENTS.methods = {}
 
-function M.add_method(id, method)
-	M.methods[id] = method
+function EVENTSadd_method(id, method)
+	EVENTS.methods[id] = method
 end
 
-function M.call_all_methods()
-	for id, method in pairs(M.methods) do
+function EVENTS.call_all_methods()
+	for id, method in pairs(EVENTS.methods) do
 		method()
 	end
 end
 
 function M.remove_method(id)
-	M.methods[id] = nil
+	EVENTS.methods[id] = nil
 end
 
-return M
+return EVENTS

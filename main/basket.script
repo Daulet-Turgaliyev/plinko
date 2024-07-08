@@ -1,16 +1,16 @@
 local ball_counter = require "main/ball_counter"
-local text_event = require "main/debug_text_events"
+--local text_event = require "main/debug_text_events"
 
 go.property("price", 0)
-go.property("basket_id", 0) -- добавляем идентификатор корзины
+go.property("basket_id", 0)
 
-local function set_price_text(self)
+local function setPriceText(self)
 	local color = self.price > 0 and vmath.vector4(0.0431, 0.7843, 0.2667, 0.8) or vmath.vector4(1, 0, 0, 1)
 	go.set("#price_label", "color", color)
 	label.set_text("#price_label", string.format("%+d", self.price))
 end
 
-local function set_debug_text(self)
+local function setDebugText(self)
 	local count = self.count
 	local total_balls = ball_counter.get_total_balls()
 	local percentage = (total_balls == 0) and 0 or (count / total_balls) * 100
@@ -19,16 +19,21 @@ end
 
 function init(self)
 	self.count = 0
-	set_price_text(self)
-	set_debug_text(self) 
+	setPriceText(self)
+	setDebugText(self)
 
-	local id = go.get_id()
-	text_event.add_method(id, function()
-		set_debug_text(self)
-	end)
+	--[[local id = go.get_id()
+	--text_event.add_method(id, function()
+		setDebugText(self)
+	end)]]
 end
 
-local function disable_ball(ball_id)
+-- Мне было очень грустно использовать update, но я не смог воспроизвести Observer pattern
+function update(self, dt)
+	setDebugText(self)
+end
+
+local function disableBall(ball_id)
 	msg.post(ball_id, "reset_and_disable")
 	msg.post("/localGeneratorfactory#balls_spawn_controller", "release_ball", { ball = ball_id })
 end
@@ -40,17 +45,15 @@ function on_message(self, message_id, message, sender)
 			local other_id = message.other_id
 			msg.post("/background#mainScreen", "update_score", { price = self.price })
 
-			-- Отключаем шарик вместо удаления
-			disable_ball(other_id)
+			disableBall(other_id)
 
-			-- Обновляем количество шариков и процентное соотношение
 			self.count = self.count + 1
 			ball_counter.increment_total_balls()
-			text_event.call_all_methods()
+			--text_event.call_all_methods()
 		end
 	end
 end
 
 function final(self)
-	text_event.remove_method(go.get_id())
+	--text_event.remove_method(go.get_id())
 end

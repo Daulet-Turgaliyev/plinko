@@ -1,87 +1,89 @@
-local function get_random_record(data)
+function init(self)
+	math.randomseed(os.time())
+end
+
+local function getRandomRecord(data)
 	local records = {}
 
-	for key, value in pairs(data) do
-
-		for sub_key, sub_value in pairs(value) do
-			if sub_key:match("record%d+") then
-				table.insert(records, sub_value)
+	for _, value in pairs(data) do
+		for subKey, subValue in pairs(value) do
+			if subKey:match("record%d+") then
+				table.insert(records, subValue)
 			end
 		end
 	end
 
 	if #records > 0 then
-		local random_index = math.random(1, #records)
-		return records[random_index]
+		local randomIndex = math.random(1, #records)
+		return records[randomIndex]
 	else
 		return nil
 	end
 end
 
-local function load_trajectories(file_path)
-	local existing_data = {}
-	-- Check if the file exists and load its content
-	local file = io.open(file_path, "r")
+local function loadTrajectories(filePath)
+	local file = io.open(filePath, "r")
+	local data = {}
+
 	if file then
 		local content = file:read("*a")
-		existing_data = json.decode(content) or {}
+		data = json.decode(content) or {}
 		file:close()
 	else
-		print("JSON файл не найден")
+		print("Файл JSON не найден")
 	end
 
-	if not existing_data then
-		existing_data = {}
-		print("JSON сломан, не удалось извлечь данные")
+	if not data then
+		data = {}
+		print("JSON поврежден, не удалось извлечь данные")
 	end
 
-	local record = get_random_record(existing_data)
-
+	local record = getRandomRecord(data)
 	local trajectories = {}
 
-	for key, value in pairs(record) do
-		local trajectory = {
-			position = vmath.vector3(value.position.x, value.position.y, 0),
-			delta = value.delta }
+	if record then
+		for _, value in pairs(record) do
+			local trajectory = {
+				position = vmath.vector3(value.position.x, value.position.y, 0),
+				delta = value.delta
+			}
 			table.insert(trajectories, trajectory)
 		end
-
-		return trajectories
 	end
 
-	local function animate_ball_to_basket(self, file_path)
-		local trajectories = load_trajectories(file_path)
-		local total_duration = 0
-		for i = 2, #trajectories do
-			local position = trajectories[i].position
-			local delay = trajectories[i].delta
-			total_duration = total_duration + delay
-			go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_LINEAR, delay, total_duration - delay, function()
-				if i == #trajectories then
-					msg.post("/localGeneratorfactory#balls_spawn_controller", "release_ball", { ball = go.get_id() })  -- Сообщаем о завершении анимации и освобождаем шарик
-				end
-			end)
-		end
-	end
+	return trajectories
+end
 
-	function init(self)
-		-- Инициализация случайного числа
-		math.randomseed(os.time())
-	end
+local function animateBallToBasket(self, filePath)
+	local trajectories = loadTrajectories(filePath)
+	local totalDuration = 0
 
-	local function reset_ball(self)
-		go.cancel_animations(go.get_id())  -- Останавливаем все анимации
-		go.set_position(vmath.vector3(320, 1000, 0))  -- Сбрасываем позицию
-		go.set("#sprite", "tint", vmath.vector4(1, 1, 1, 1))  -- Восстанавливаем видимость спрайта
-	end
+	for i = 2, #trajectories do
+		local position = trajectories[i].position
+		local delay = trajectories[i].delta
+		totalDuration = totalDuration + delay
 
-	function on_message(self, message_id, message, sender)
-		if message_id == hash("start_animation") then
-			animate_ball_to_basket(self, message.records)
-		elseif message_id == hash("trigger_response") then
-			--sound.play("#sound")
-		elseif message_id == hash("reset_and_disable") then
-			reset_ball(self)
-			msg.post(".", "disable")
-		end
+		go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, position, go.EASING_LINEAR, delay, totalDuration - delay, function()
+			if i == #trajectories then
+				msg.post("/localGeneratorfactory#balls_spawn_controller", "release_ball", { ball = go.get_id() })
+			end
+		end)
 	end
+end
+
+local function resetBall(self)
+	go.cancel_animations(go.get_id())
+	go.set_position(vmath.vector3(320, 1000, 0))
+	go.set("#sprite", "tint", vmath.vector4(1, 1, 1, 1))
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("start_animation") then
+		animateBallToBasket(self, message.records)
+	elseif message_id == hash("trigger_response") then
+		sound.play("#sound")
+	elseif message_id == hash("reset_and_disable") then
+		resetBall(self)
+		msg.post(".", "disable")
+	end
+end

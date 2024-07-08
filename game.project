@@ -44,6 +44,7 @@ shared_state = 1
 gravity_y = -1000.0
 scale = 0.01
 max_collision_object_count = 256
+max_collisions = 128
 
 [sprite]
 max_count = 512
