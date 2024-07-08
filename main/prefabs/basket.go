@@ -1,6 +1,6 @@
 components {
   id: "backet"
-  component: "/main/basket.script"
+  component: "/main/scripts/basket.script"
   position {
     x: 0.0
     y: 0.0
@@ -15,7 +15,7 @@ components {
 }
 components {
   id: "explosion"
-  component: "/main/explosion.particlefx"
+  component: "/main/particles/explosion.particlefx"
   position {
     x: 0.0
     y: 0.0
@@ -36,7 +36,7 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/main/main.atlas\"\n"
+  "  texture: \"/assets/GameElements/main.atlas\"\n"
   "}\n"
   ""
   position {
@@ -64,7 +64,7 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/main/main.atlas\"\n"
+  "  texture: \"/assets/GameElements/main.atlas\"\n"
   "}\n"
   ""
   position {
@@ -92,7 +92,7 @@ embedded_components {
   "blend_mode: BLEND_MODE_ALPHA\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/main/main.atlas\"\n"
+  "  texture: \"/assets/GameElements/main.atlas\"\n"
   "}\n"
   ""
   position {

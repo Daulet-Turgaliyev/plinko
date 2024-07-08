@@ -1,4 +1,4 @@
-local ball_counter = require "main/ball_counter"
+local ball_counter = require "main/data/ball_counter"
 --local text_event = require "main/debug_text_events"
 
 go.property("price", 0)

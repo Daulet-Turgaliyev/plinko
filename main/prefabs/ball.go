@@ -1,21 +1,6 @@
 components {
   id: "ball"
-  component: "/main/ball.script"
-  position {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  rotation {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-    w: 1.0
-  }
-}
-components {
-  id: "record_trajectories"
-  component: "/main/record_trajectories.script"
+  component: "/main/scripts/ball.script"
   position {
     x: 0.0
     y: 0.0
@@ -50,17 +35,23 @@ embedded_components {
     z: 0.0
     w: 1.0
   }
+  scale {
+    x: 0.8
+    y: 0.8
+    z: 1.0
+  }
 }
 embedded_components {
   id: "collisionobject"
   type: "collisionobject"
   data: "collision_shape: \"\"\n"
-  "type: COLLISION_OBJECT_TYPE_DYNAMIC\n"
-  "mass: 1.0\n"
-  "friction: 0.0\n"
-  "restitution: 0.6\n"
-  "group: \"default\"\n"
-  "mask: \"default\"\n"
+  "type: COLLISION_OBJECT_TYPE_KINEMATIC\n"
+  "mass: 0.0\n"
+  "friction: 20.0\n"
+  "restitution: 0.55\n"
+  "group: \"Ball\"\n"
+  "mask: \"Pin\"\n"
+  "mask: \"Backet\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"
@@ -79,12 +70,35 @@ embedded_components {
   "    count: 1\n"
   "    id: \"\"\n"
   "  }\n"
-  "  data: 12.5\n"
+  "  data: 9.5\n"
   "}\n"
-  "linear_damping: 0.3\n"
-  "angular_damping: 0.2\n"
+  "linear_damping: 0.0\n"
+  "angular_damping: 0.0\n"
   "locked_rotation: false\n"
   "bullet: false\n"
+  ""
+  position {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  rotation {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+    w: 1.0
+  }
+}
+embedded_components {
+  id: "sound"
+  type: "sound"
+  data: "sound: \"/assets/sounds/DM-CGS-07.wav\"\n"
+  "looping: 0\n"
+  "group: \"master\"\n"
+  "gain: 1.0\n"
+  "pan: 0.0\n"
+  "speed: 1.0\n"
+  "loopcount: 0\n"
   ""
   position {
     x: 0.0
