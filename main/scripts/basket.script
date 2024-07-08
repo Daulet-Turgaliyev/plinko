@@ -1,0 +1,59 @@
+local ball_counter = require "main/data/ball_counter"
+--local text_event = require "main/debug_text_events"
+
+go.property("price", 0)
+go.property("basket_id", 0)
+
+local function setPriceText(self)
+	local color = self.price > 0 and vmath.vector4(0.0431, 0.7843, 0.2667, 0.8) or vmath.vector4(1, 0, 0, 1)
+	go.set("#price_label", "color", color)
+	label.set_text("#price_label", string.format("%+d", self.price))
+end
+
+local function setDebugText(self)
+	local count = self.count
+	local total_balls = ball_counter.get_total_balls()
+	local percentage = (total_balls == 0) and 0 or (count / total_balls) * 100
+	label.set_text("#debug_label", string.format("Count: %d\nP: %.2f%%", count, percentage))
+end
+
+function init(self)
+	self.count = 0
+	setPriceText(self)
+	setDebugText(self)
+
+	--[[local id = go.get_id()
+	--text_event.add_method(id, function()
+		setDebugText(self)
+	end)]]
+end
+
+-- Мне было очень грустно использовать update, но я не смог воспроизвести Observer pattern
+function update(self, dt)
+	setDebugText(self)
+end
+
+local function disableBall(ball_id)
+	msg.post(ball_id, "reset_and_disable")
+	msg.post("/localGeneratorfactory#balls_spawn_controller", "release_ball", { ball = ball_id })
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("trigger_response") then
+		if message.enter then
+			particlefx.play("#explosion")
+			local other_id = message.other_id
+			msg.post("/background#mainScreen", "update_score", { price = self.price })
+
+			disableBall(other_id)
+
+			self.count = self.count + 1
+			ball_counter.increment_total_balls()
+			--text_event.call_all_methods()
+		end
+	end
+end
+
+function final(self)
+	--text_event.remove_method(go.get_id())
+end

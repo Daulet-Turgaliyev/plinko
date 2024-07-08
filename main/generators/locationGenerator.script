@@ -1,0 +1,28 @@
+go.property("screen_center", vmath.vector3(0, 0, 0))
+go.property("peg_spacing", 50)
+go.property("rows", 10)
+
+local function createPyramid(self)
+	local rows = self.rows
+	local spacing = self.peg_spacing
+	local start_y = self.screen_center.y
+	local z = self.screen_center.z
+
+	for row = 2, rows do
+		local num_pegs = row
+		local total_width = (num_pegs - 1) * spacing
+		local start_x = self.screen_center.x - total_width / 2
+
+		for col = 1, num_pegs do
+			factory.create("/localGeneratorfactory#peg_factory", vmath.vector3(start_x, start_y, z))
+			start_x = start_x + spacing
+		end
+		start_y = start_y - spacing
+	end
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("create_pyramid") then
+		createPyramid(self)
+	end
+end

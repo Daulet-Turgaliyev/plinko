@@ -1,0 +1,104 @@
+{
+	"baskets": [
+		{
+			"basket_name": "basketA",
+			"spawn_position": {
+				"X": 19,
+				"Y": 99
+			},
+			"probability": 1,
+			"price": -20,
+			"records": "settings/physics_baked/basketA.json"
+		},
+		{
+			"basket_name": "basketB",
+			"spawn_position": {
+				"X": 86,
+				"Y": 99
+			},
+			"probability": 0.8,
+			"price": -10,
+			"records": "settings/physics_baked/basketB.json"
+		},
+		{
+			"basket_name": "basketC",
+			"spawn_position": {
+				"X": 154,
+				"Y": 99
+			},
+			"probability": 0.5,
+			"price": 2,
+			"records": "settings/physics_baked/basketC.json"
+		},
+		{
+			"basket_name": "basketD",
+			"spawn_position": {
+				"X": 222,
+				"Y": 99
+			},
+			"probability": 0.9,
+			"price": -5,
+			"records": "settings/physics_baked/basketD.json"
+		},
+		{
+			"basket_name": "basketE",
+			"spawn_position": {
+				"X": 290,
+				"Y": 99
+			},
+			"probability": 0.3,
+			"price": 50,
+			"records": "settings/physics_baked/basketE.json"
+		},
+		{
+			"basket_name": "basketF",
+			"spawn_position": {
+				"X": 358,
+				"Y": 99
+			},
+			"probability": 0.1,
+			"price": 100,
+			"records": "settings/physics_baked/basketF.json"
+		},
+		{
+			"basket_name": "basketG",
+			"spawn_position": {
+				"X": 426,
+				"Y": 99
+			},
+			"probability": 0.5,
+			"price": -10,
+			"records": "settings/physics_baked/basketG.json"
+		},
+		{
+			"basket_name": "basketH",
+			"spawn_position": {
+				"X": 494,
+				"Y": 99
+			},
+			"probability": 0.05,
+			"price": 500,
+			"records": "settings/physics_baked/basketH.json"
+		},
+		{
+			"basket_name": "basketI",
+			"spawn_position": {
+				"X": 562,
+				"Y": 99
+			},
+			"probability": 0.8,
+			"price": -15,
+			"records": "settings/physics_baked/basketI.json"
+		},
+		{
+			"basket_name": "basketJ",
+			"spawn_position": {
+				"X": 630,
+				"Y": 99
+			},
+			"probability": 0.7,
+			"price": -5,
+			"records": "settings/physics_baked/basketJ.json"
+		}
+	]
+}
