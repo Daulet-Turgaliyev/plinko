@@ -1,0 +1,24 @@
+function init(self)
+	msg.post("#collisionobject", "acquire_input_focus")
+	self.collision_count = 0
+end
+
+local function animateScale(node, initial_scale, target_scale, duration)
+	go.animate(node, "scale", go.PLAYBACK_ONCE_FORWARD, target_scale, go.EASING_LINEAR, duration, 0, function()
+		go.animate(node, "scale", go.PLAYBACK_ONCE_FORWARD, initial_scale, go.EASING_LINEAR, duration)
+	end)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("trigger_response") then
+		local initial_scale = vmath.vector3(1.2, 1.2, 1.2)
+		local target_scale = vmath.vector3(1.7, 1.7, 1.7)
+		local duration = 0.5
+
+		if message.enter then
+			animateScale("#backgroundPin", initial_scale, target_scale, duration)
+		elseif message.exit then
+			go.animate("#backgroundPin", "scale", go.PLAYBACK_ONCE_FORWARD, initial_scale, go.EASING_LINEAR, duration)
+		end
+	end
+end

@@ -1,0 +1,39 @@
+function init(self)
+	local config_path = "settings/baskets_config.json"
+	print("Пытаюсь загрузить конфигурацию из: " .. config_path)
+
+	local file = io.open(config_path, "r")
+	if file then
+		local content = file:read("*a")
+		file:close()
+		print("JSON конфигурация успешно загружена")
+
+		local config, decode_err = json.decode(content)
+		if config then
+			print("JSON успешно декодирован")
+		else
+			print("Ошибка декодирования JSON: " .. decode_err)
+		end
+
+		self.baskets = {}
+		if config and config.baskets then
+			for _, basket in ipairs(config.baskets) do
+				local pos = vmath.vector3(basket.spawn_position.X, basket.spawn_position.Y, -0.2)
+				local id = factory.create("#basket_factory", pos, nil, { price = basket.price })
+				go.set_scale(vmath.vector3(0.1, 0.1, 0.1), id)
+				local id_str = tostring(id)
+				self.baskets[id_str] = {
+					name = basket.basket_name,
+					price = basket.price,
+					probability = basket.probability,
+					records = basket.records
+				}
+			end
+			msg.post("/localGeneratorfactory#balls_spawn_controller", "baskets_loaded", { baskets = self.baskets })
+		else
+			print("Ошибка в структуре JSON конфигурации")
+		end
+	else
+		print("Ошибка открытия файла JSON конфигурации")
+	end
+end
